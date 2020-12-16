@@ -20,14 +20,21 @@
         <li
           v-for="(todo, index) in todos"
           :key="todo"
-          
+          :class="{ editing: todo === editingTodo }"
         >
           <div class="view">
             <input class="toggle" type="checkbox" />
-            <label>{{ todo.text }}</label>
+            <label @dblclick="editTodo(todo)">{{ todo.text }}</label>
             <button class="destroy" @click="removeTodo(index)"></button>
           </div>
-          <input class="edit" value="Create a TodoMVC template" />
+          <input
+            class="edit"
+            placeholder="Create a TodoMVC template"
+            v-model="todo.text"
+            @keyup.enter="doneEdit(todo)"
+            @blur="doneEdit(todo)"
+            @keyup.esc="cancelEdit(todo)"
+          />
         </li>
       </ul>
     </section>
@@ -81,24 +88,54 @@ const useAddTodo = (todos) => {
     addTodo,
   };
 };
-const useRemove = todos => {
+
+const useRemove = (todos) => {
   const removeTodo = (index) => {
+    console.log('remove')
     todos.value.splice(index, 1);
   };
   return {
-    removeTodo
+    removeTodo,
   };
-
 };
+
+const useEdit = (removeTodo) => {
+  let beforeEditText = "";
+  const editingTodo = ref(null);
+  const editTodo = (todo) => {
+    beforeEditText = todo.text;
+    editingTodo.value = todo;
+  };
+  const doneEdit = (todo) => {
+    if (!editingTodo.value) {
+      return;
+    }
+    todo.text || removeTodo(todo);
+    editingTodo.value = null;
+  };
+  const cancelEdit = (todo) => {
+    editingTodo.value = null;
+    todo.text = beforeEditText;
+  };
+  return {
+    editingTodo,
+    editTodo,
+    doneEdit,
+    cancelEdit,
+  };
+};
+
 export default {
   name: "App",
   components: {},
   setup() {
     const todos = ref([]);
+    const { removeTodo } = useRemove(todos);
     return {
       todos,
+      removeTodo,
       ...useAddTodo(todos),
-      ...useRemove(todos)
+      ...useEdit(removeTodo),
     };
   },
 };
