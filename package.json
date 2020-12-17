@@ -1,11 +1,8 @@
 {
   "name": "todomvc-vue3",
-  "version": "0.0.0",
-  "scripts": {
-    "dev": "vite",
-    "build": "vite build --base=/todomvc-vue3/",
-    "commit": "git-cz"
-  },
+  "version": "1.0.0",
+  "description": "TodoMVC app using Vue3",
+  "main": "index.js",
   "dependencies": {
     "git-cz": "^4.7.6",
     "vue": "^3.0.4"
@@ -13,5 +10,21 @@
   "devDependencies": {
     "vite": "^1.0.0-rc.13",
     "@vue/compiler-sfc": "^3.0.4"
-  }
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build --base=/todomvc-vue3/",
+    "commit": "git-cz"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shibin-cli/todomvc-vue3.git"
+  },
+  "keywords": [],
+  "author": "Shibin",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/shibin-cli/todomvc-vue3/issues"
+  },
+  "homepage": "https://github.com/shibin-cli/todomvc-vue3#readme"
 }
