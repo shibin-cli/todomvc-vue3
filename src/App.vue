@@ -60,7 +60,7 @@
       <ul class="filters">
         <li>
           <a href="#/" :class="{ selected: type === 'all' }"
-            >All {{ type === "all" }}</a
+            >All</a
           >
         </li>
         <li>
